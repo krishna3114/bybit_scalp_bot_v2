@@ -1,6 +1,6 @@
 # Bybit Trading Bot v2.13
-# (C) 2022 Ryan Hayabusa 2022 
-# Github: https://github.com/ryu878 
+# (C) 2022 Ryan Hayabusa 2022
+# Github: https://github.com/ryu878
 # Discord: ryuryu#4087
 #######################################################################################################
 # pip install -U pip
@@ -145,12 +145,12 @@ def get_linenumber():
 def cancel_entry_orders():
     orders = client.get_active_order(symbol=symbol)
     for order in orders['result']['data']:
-        if order['order_status'] != 'Filled' and order['side'] == 'Sell' and order['order_status'] != 'Cancelled' and order['reduce_only'] == False:     
+        if order['order_status'] != 'Filled' and order['side'] == 'Sell' and order['order_status'] != 'Cancelled' and order['reduce_only'] == False:
             client.cancel_active_order(symbol=symbol, order_id=order['order_id'])
         elif order['order_status'] != 'Filled' and order['side'] == 'Buy' and order['order_status'] != 'Cancelled' and order['reduce_only'] == False:
             client.cancel_active_order(symbol=symbol, order_id=order['order_id'])
 
-        
+
 def cancel_close_orders():
     orders = client.get_active_order(symbol=symbol)
     for order in orders['result']['data']:
@@ -173,7 +173,7 @@ def get_close_orders():
         global tp_sell_order_size
         global tp_sell_order_id
         global tp_sell_order_prc
-        
+
         if order['order_status'] == 'New' and order['order_status'] and order['order_status'] != 'Filled' and order['side'] == "Buy" and order['reduce_only'] == True:
 
             tp_buy_order_size = order['qty']
@@ -181,7 +181,7 @@ def get_close_orders():
             tp_buy_order_prc = order['price']
 
             print('│     Buy Close order:',tp_buy_order_size, tp_buy_order_prc)
-        
+
         else:
             # print('No Close Buy orders found')
             pass
@@ -194,7 +194,7 @@ def get_close_orders():
             tp_sell_order_prc = order['price']
 
             print('│     Sell Close order:',tp_sell_order_size, tp_sell_order_prc)
-        
+
         else:
             # print('No Close Sell orders found')
             pass
@@ -387,7 +387,7 @@ while True:
 
     ma_order_long_1m = ema_60_1_binance < ema_120_1_binance and ema_120_1_binance < ema_240_1_binance and ema_3_1_high_bybit < ema_60_1_binance
     ma_order_long_5m = ema_60_5_binance < ema_120_5_binance and ema_120_5_binance < ema_240_5_binance and ema_3_5_high_bybit < ema_60_5_binance
-    
+
     ma_order_shrt_1m = ema_60_1_binance > ema_120_1_binance and ema_120_1_binance > ema_240_1_binance and ema_3_1_low_bybit > ema_60_1_binance
     ma_order_shrt_5m = ema_60_5_binance > ema_120_5_binance and ema_120_5_binance > ema_240_5_binance and ema_3_5_low_bybit > ema_60_5_binance
 
@@ -397,7 +397,7 @@ while True:
 
     try:
         # Get Orderbook data
-        get_orderbook()   
+        get_orderbook()
     except Exception as e:
         get_linenumber()
         print(line_number, 'exeception: {}'.format(e))
@@ -467,10 +467,10 @@ while True:
 
 
     print('├─────────────────────────────────────────────┤')
-    print('│  Sell Position Size:',sell_position_size) 
+    print('│  Sell Position Size:',sell_position_size)
     print('│ Sell Position Price:',sell_position_prce)
     # print('├─────────────────────────────────────────────┤')
-    # print('│   Buy Position Size:',buy_position_size) 
+    # print('│   Buy Position Size:',buy_position_size)
     # print('│  Buy Position Price:',buy_position_prce)
     print('├─────────────────────────────────────────────┤')
 
@@ -495,13 +495,13 @@ while True:
             pass
     else:
         pass
-    
-    
-    
+
+
+
     ''' Cancel Entry order '''
 
     if float(ask) < float(ema_3_1_high_bybit) or float(ask) < float(ema_3_5_high_bybit):
-        
+
         try:
             cancel_entry_orders()
             time.sleep(0.01)
@@ -533,14 +533,14 @@ while True:
             print(line_number, 'exeception: {}'.format(e))
             pass
 
-            
+
         print('│  ',sell_tp_price)
         print('│  ',tp_buy_order_prc)
 
 
         # time.sleep(333)
 
-        
+
         if tp_buy_order_prc != sell_tp_price or tp_buy_order_size != sell_position_size:
 
             try:
@@ -550,7 +550,7 @@ while True:
                 get_linenumber()
                 print(line_number, 'exeception: {}'.format(e))
                 pass
-    
+
             try:
                 place_active_buy_limit_tp_order = client.place_active_order(
                 side='Buy',\
@@ -584,7 +584,7 @@ while True:
 
         print('├─────────────────────────────────────────────┤')
         print('│  Placing order ⇲')
-        
+
         try:
             cancel_entry_orders()
             time.sleep(0.01)
@@ -606,9 +606,9 @@ while True:
         print('├─────────────────────────────────────────────┤')
         print('│  waiting...')
 
-    
+
     print('├─────────────────────────────────────────────┤')
-    
+
     if ma_order_shrt_1m == True:
         print(Fore.RED +'│ MA order Short 1m - OK'+ Style.RESET_ALL)
     else:
