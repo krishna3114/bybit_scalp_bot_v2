@@ -85,6 +85,14 @@ get_decimals()
 print('Min lot size for',symbol,'is:',min_trading_qty)
 print('Max leverage is:',leverage)
 
+try:
+    client.set_leverage(
+        symbol=symbol,
+        buy_leverage=leverage,
+        sell_leverage=leverage)
+except:
+    print("Leverage not changed")
+
 
 get_balance()
 time.sleep(0.01)
