@@ -38,6 +38,11 @@ enable_trading = input('Enable Trading? (0 - Disable, 1 - Enable) ')
 symbol = input('What Asset To trade? ')
 symbol = (symbol+'USDT').upper()
 
+try:
+    client.latest_information_for_symbol(symbol=symbol)['ret_msg']
+except:
+    print('Symbol: ',symbol, ' does not exist. Try again...')
+    quit()
 
 def get_balance():
     my_balance = exchange.fetchBalance()
@@ -104,7 +109,19 @@ print('        1x size:',what_1x_is)
 print('        0.1x is:',what_1x_is/10)
 print('          0.01x:',what_1x_is/100)
 
-min_lot_size = input('What size to trade? ')
+# Verify that input size to trade is greater than minimum trading quantity for symbol
+def trade_size():
+    global min_lot_size
+    min_lot_size=float(input("What size to trade: "))
+    while (not isinstance(min_lot_size, float)):
+        print('ERROR: Input needs to be number')
+        min_lot_size=input("What size to trade: ")
+        while ( float(min_lot_size) < min_trading_qty ):
+            print('ERROR: Min lot size for',symbol,'is:',min_trading_qty)
+            min_lot_size=float(input("What size to trade: "))
+    return min_lot_size
+
+trade_size()
 
 
 started = datetime.datetime.now().strftime('%H:%M:%S')
