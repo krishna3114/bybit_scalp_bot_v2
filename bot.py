@@ -101,7 +101,7 @@ print('Max leverage is:',leverage)
 try:
     client.set_leverage(
         symbol=symbol,
-        buy_leverage=leverage,
+        #buy_leverage=leverage,
         sell_leverage=leverage)
 except:
     print("Leverage not changed")
@@ -192,8 +192,8 @@ def cancel_entry_orders():
     for order in orders['result']['data']:
         if order['order_status'] != 'Filled' and order['side'] == 'Sell' and order['order_status'] != 'Cancelled' and order['reduce_only'] == False:
             client.cancel_active_order(symbol=symbol, order_id=order['order_id'])
-        elif order['order_status'] != 'Filled' and order['side'] == 'Buy' and order['order_status'] != 'Cancelled' and order['reduce_only'] == False:
-            client.cancel_active_order(symbol=symbol, order_id=order['order_id'])
+        #elif order['order_status'] != 'Filled' and order['side'] == 'Buy' and order['order_status'] != 'Cancelled' and order['reduce_only'] == False:
+            #client.cancel_active_order(symbol=symbol, order_id=order['order_id'])
 
 
 def cancel_close_orders():
@@ -201,8 +201,8 @@ def cancel_close_orders():
     for order in orders['result']['data']:
         if order['order_status'] != 'Filled' and order['side'] == 'Buy' and order['order_status'] != 'Cancelled' and order['reduce_only'] == True:
             client.cancel_active_order(symbol=symbol, order_id=order['order_id'])
-        elif order['order_status'] != 'Filled' and order['side'] == 'Sell' and order['order_status'] != 'Cancelled' and order['reduce_only'] == True:
-            client.cancel_active_order(symbol=symbol, order_id=order['order_id'])
+        #elif order['order_status'] != 'Filled' and order['side'] == 'Sell' and order['order_status'] != 'Cancelled' and order['reduce_only'] == True:
+            #client.cancel_active_order(symbol=symbol, order_id=order['order_id'])
 
 
 def get_close_orders():
