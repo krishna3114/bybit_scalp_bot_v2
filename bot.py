@@ -34,7 +34,6 @@ binance_client = Client(binance_api_key, binance_api_secret)
 client = usdt_perpetual.HTTP(endpoint=endpoint,api_key=api_key,api_secret=api_secret)
 
 
-enable_trading = input('Enable Trading? (0 - Disable, 1 - Enable) ')
 symbol = input('What Asset To trade? ')
 symbol = (symbol+'USDT').upper()
 
@@ -459,14 +458,8 @@ while True:
     print('│            Lot size:',min_lot_size,'| 1x:',what_1x_is)
     print('├─────────────────────────────────────────────┤')
 
-    if enable_trading == '1':
-        print(Fore.GREEN +'│             Trading: Enabled'+ Style.RESET_ALL)
-    if enable_trading == '0':
-        print(Fore.RED +'│             Trading: Disabled'+ Style.RESET_ALL)
-
     profit = 100 - ((float(available_balance) - float(realised_pnl)) * 100 / float(available_balance))
     profit = round(profit,2)
-
 
     print('│   Available Balance:',available_balance)
     print('│        Realized PnL:',realised_pnl)
@@ -502,7 +495,7 @@ while True:
 
     ''' First Short entry '''
 
-    if enable_trading == '1' and sell_position_size == 0 and sell_position_size < max_size and good_short_trade_conditions == True:
+    if sell_position_size == 0 and sell_position_size < max_size and good_short_trade_conditions == True:
 
         try:
             place_first_entry_market_order = client.place_active_order(\
