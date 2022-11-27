@@ -20,6 +20,7 @@ import uuid
 import random
 import sqlite3
 import datetime
+import argparse
 import pandas as pd
 from config import *
 from inspect import currentframe
@@ -27,15 +28,23 @@ from pybit import usdt_perpetual
 from binance.client import Client
 from colorama import init, Fore, Back, Style
 
-
+parser = argparse.ArgumentParser(description="Help message",
+                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("--symbol", help="symbol")
+parser.add_argument("--iqty", help="Value 0-1. Percentual initial quantity converted to min_lot_size")
+args = parser.parse_args()
+config = vars(args)
 
 exchange = ccxt.bybit({'apiKey':api_key,'secret':api_secret})
 binance_client = Client(binance_api_key, binance_api_secret)
 client = usdt_perpetual.HTTP(endpoint=endpoint,api_key=api_key,api_secret=api_secret)
 
-
-symbol = input('What Asset To trade? ')
-symbol = (symbol+'USDT').upper()
+try:
+    args.symbol
+    symbol = (args.symbol+'USDT').upper()
+except NameError:
+    symbol = input('Symbol not defined. What Asset To trade? ')
+    symbol = (symbol+'USDT').upper()
 
 try:
     client.latest_information_for_symbol(symbol=symbol)['ret_msg']
@@ -120,11 +129,23 @@ def trade_size():
             min_lot_size=float(input("What size to trade: "))
     return min_lot_size
 
-trade_size()
+try:
+    args.iqty
+    iqty = float(args.iqty)
+    print('Initial quantity in percent configured = ' + str(iqty) + '*100' + '=' + str(iqty*100) + '%')
+    num_decimals = str(min_trading_qty)[::-1].find('.')
+    print('symbol decimals: ' + str(num_decimals))
+    min_lot_size=(float(iqty)*float(equity))
+    min_lot_size=round(min_lot_size, num_decimals)
+    print('This equals to min_lot_size = iqty*equity=' + str(min_lot_size))
+except NameError:
+    trade_size()
 
+if min_lot_size < min_trading_qty:
+    print('min_lot_size < min_trading_qty:')
+    trade_size()
 
 started = datetime.datetime.now().strftime('%H:%M:%S')
-
 
 ws_perp = usdt_perpetual.WebSocket(
     test=False,
