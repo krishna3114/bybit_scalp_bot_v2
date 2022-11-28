@@ -385,8 +385,14 @@ def get_position():
         if position['side'] == 'Sell':
             global sell_position_size
             global sell_position_prce
+            global sell_position_realised_pnl
+            global sell_position_unrealised_pnl
+            global sell_position_realised_pnl_cum
             sell_position_size = position['size']
             sell_position_prce = position['entry_price']
+            sell_position_unrealised_pnl = position['position_unrealised']
+            sell_position_realised_pnl = position['position_realised']
+            sell_position_realised_pnl_cum = position['position_realised_cum']
         if position['side'] == 'Buy':
             global buy_position_size
             global buy_position_prce
@@ -488,8 +494,9 @@ while True:
     print('│      Wallet Balance:',wallet_balance)
     print('│              Equity:',equity)
     print('├─────────────────────────────────────────────┤')
-    print('│        Realized PnL:',realised_pnl)
-    print('│      UnRealized PnL:',unrealised_pnl)
+    print('│ Symbol realized PnL:',sell_position_realised_pnl)
+    print('│ Symbol cummulat PnL:',sell_position_realised_pnl_cum)
+    print('│ Symbol Unrealiz PnL:',sell_position_unrealised_pnl)
     print(Fore.GREEN +'│              Profit:',profit,'%'+ Style.RESET_ALL)
     print('├─────────────────────────────────────────────┤')
     print('│                 Ask:',ask)
@@ -671,5 +678,9 @@ while True:
     else:
         print('│ Ask < EMA3 on 5m')
 
+<<<<<<< HEAD
     print('───────────────────── END ─────────────────────\n\n\n\n\n\n\n\n\n\n\n')
+=======
+    print('───────────────────── END ─────────────────────'\n\n\n\n\n\n\n\n\n\n\n)
+>>>>>>> 8009a02 (Adds more info to position)
     time.sleep(0.02)
