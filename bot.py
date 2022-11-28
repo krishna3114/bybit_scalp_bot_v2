@@ -671,4 +671,5 @@ while True:
     else:
         print('│ Ask < EMA3 on 5m')
 
+    print('───────────────────── END ─────────────────────\n\n\n\n\n\n\n\n\n\n\n')
     time.sleep(0.02)
