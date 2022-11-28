@@ -390,9 +390,9 @@ def get_position():
             global sell_position_realised_pnl_cum
             sell_position_size = position['size']
             sell_position_prce = position['entry_price']
-            sell_position_unrealised_pnl = position['position_unrealised']
-            sell_position_realised_pnl = position['position_realised']
-            sell_position_realised_pnl_cum = position['position_realised_cum']
+            sell_position_unrealised_pnl = position['unrealised_pnl']
+            sell_position_realised_pnl = position['realised_pnl']
+            sell_position_realised_pnl_cum = position['cum_realised_pnl']
         if position['side'] == 'Buy':
             global buy_position_size
             global buy_position_prce
