@@ -677,9 +677,5 @@ while True:
     else:
         print('│ Ask < EMA3 on 5m')
 
-<<<<<<< HEAD
     print('───────────────────── END ─────────────────────\n\n\n\n\n\n\n\n\n\n\n')
-=======
-    print('───────────────────── END ─────────────────────'\n\n\n\n\n\n\n\n\n\n\n)
->>>>>>> 8009a02 (Adds more info to position)
     time.sleep(0.02)
