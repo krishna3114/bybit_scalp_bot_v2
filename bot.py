@@ -105,6 +105,14 @@ try:
         sell_leverage=leverage)
 except:
     print("Leverage not changed")
+    
+    
+try:
+    client.position_mode_switch(
+        symbol=symbol,
+        mode="BothSide")
+except:
+    print("Position side not changed")
 
 
 get_balance()
